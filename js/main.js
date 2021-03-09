@@ -1,6 +1,7 @@
 let boardSize = 15;
 let board = document.getElementById("board");
 let keyboardInput = document.getElementById("keyboardInput");
+//let direction = [0,0]; //alternatief
 let direction = 0;
 let position = { x: Math.floor(boardSize / 2), y: Math.floor(boardSize / 2) };
 
@@ -18,17 +19,27 @@ function drawBoard() {
 //clearBoard
 
 function clearBoard() {
+    /*
     for (let j = 0; j < boardSize; j++) {
         for (let i = 0; i < boardSize; i++) {
             let snakeId = "x" + i + "y" + j;
             document.getElementById(snakeId).className = "cell";
         }
     }
+    */
+
+    // bovenstaande kan met minder code door dit te doen....  
+    document.querySelectorAll('.cell').forEach(function(cell) {
+        cell.className = "cell";
+    }); 
 }
 
 //updatePosition
 
 function updatePosition() {
+    //position.y += direction[1]; //alternatief
+    //position.x += direction[0]; //alternatief   
+  
     if (direction == 1) {
         position.y = position.y - 1;
     }
@@ -41,11 +52,13 @@ function updatePosition() {
     if (direction == 4) {
         position.x = position.x - 1;
     }
+  
 }
 
 //resetGame
 
 function resetGame() {
+    //direction = [0,0]; //alternatief
     direction = 0;
     position = { x: Math.floor((boardSize - 1) / 2), y: Math.floor((boardSize - 1) / 2) };
 }
@@ -73,32 +86,36 @@ function gameLoop()
     drawSnake();
 }
 
-
-//start Game from here......
+//start Game here......
 
 drawBoard();
 setInterval(gameLoop, 500);
 
 //
-// window.requestAnimationFrame
+// todo: werk met window.requestAnimationFrame i.p.v. setInterval
 //
 
 // keyboard controls
 
 window.addEventListener("keydown", function (event) {
-
+    
     if (event.key == "ArrowUp") {
+        //direction = [0,-1]; //alternatief
         direction = 1;
     }
     if (event.key == "ArrowDown") {
+        //direction = [0,1]; //alternatief
         direction = 2;
     }
     if (event.key == "ArrowRight") {
+        //direction = [1,0]; //alternatief
         direction = 3;
     }
     if (event.key == "ArrowLeft") {
+        //direction = [-1,0]; //alternatief
         direction = 4;
     }
-    // voeg WASD toe (voor de echte gamers onder ons....)
-    keyboardInput.innerHTML = direction;
+
+    // todo: voeg WASD toe (voor de echte gamers onder ons....)
+    keyboardInput.innerHTML = "direction:"+direction;
 }, true);
