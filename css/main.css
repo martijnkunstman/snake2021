@@ -88,9 +88,20 @@ textarea {
    ========================================================================== */
 
 
-.red{
-  color: red;
+.cell{
+  width: 20px;
+  height: 20px;
+  border: 1px solid black;
+  background-color:  #aaaaaa;
+  display:inline-block;
+  font-size: 5px;
 }
+
+/*
+#x4y6{
+  background-color:  red;
+}
+*/
 
 
 
