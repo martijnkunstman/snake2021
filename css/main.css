@@ -87,14 +87,31 @@ textarea {
    Author's custom styles
    ========================================================================== */
 
+#board{
+  display:inline;
+  background-color:  #aaaaaa;
+}
 
 .cell{
   width: 20px;
   height: 20px;
   border: 1px solid black;
   background-color:  #aaaaaa;
-  display:inline-block;
-  font-size: 5px;
+  display:inline;
+  float:left;
+  font-size: 8px;
+}
+
+#x11y11{
+  background: green;
+}
+#x10y10{
+  background: yellow;
+}
+
+.body{
+  background-color:  red;
+  border-radius: 50%;
 }
 
 /*

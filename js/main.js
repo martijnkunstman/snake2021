@@ -1,16 +1,15 @@
-let boardSize = 11;
+let boardSize = 15;
 let board = document.getElementById("board");
 let keyboardInput = document.getElementById("keyboardInput");
 let direction = 0;
-let position = { x: Math.floor((boardSize - 1) / 2), y: Math.floor((boardSize - 1) / 2) };
+let position = { x: Math.floor(boardSize / 2), y: Math.floor(boardSize / 2) };
 
-
-//drawBoard
+//drawBoard (maakt het speelveld dat is opgebouwd uit div elementen met een unieke id)
 
 function drawBoard() {
-    for (let j = 0; j < boardSize; j++) {
-        for (let i = 0; i < boardSize; i++) {
-            board.innerHTML += "<div id='x" + i + "y" + j + "' class='cell'>" + i + "-" + j + "</div>";
+    for (let y = 0; y < boardSize; y++) {
+        for (let x = 0; x < boardSize; x++) {
+            board.innerHTML += "<div id='x" + x + "y" + y + "' class='cell'>x"+x+"y"+y+"</div>";
         }
         board.innerHTML += "<br>";
     }
@@ -22,7 +21,7 @@ function clearBoard() {
     for (let j = 0; j < boardSize; j++) {
         for (let i = 0; i < boardSize; i++) {
             let snakeId = "x" + i + "y" + j;
-            document.getElementById(snakeId).style.background = "gray";
+            document.getElementById(snakeId).className = "cell";
         }
     }
 }
@@ -30,16 +29,16 @@ function clearBoard() {
 //updatePosition
 
 function updatePosition() {
-    if (direction == "up") {
+    if (direction == 1) {
         position.y = position.y - 1;
     }
-    if (direction == "down") {
+    if (direction == 2) {
         position.y = position.y + 1;
     }
-    if (direction == "right") {
+    if (direction == 3) {
         position.x = position.x + 1;
     }
-    if (direction == "left") {
+    if (direction == 4) {
         position.x = position.x - 1;
     }
 }
@@ -51,7 +50,7 @@ function resetGame() {
     position = { x: Math.floor((boardSize - 1) / 2), y: Math.floor((boardSize - 1) / 2) };
 }
 
-//gameOver
+//collisionCheck
 
 function collisionCheck() {
     if (position.x < 0 || position.y < 0 || position.x > boardSize - 1 || position.y > boardSize - 1) { resetGame() }
@@ -61,10 +60,8 @@ function collisionCheck() {
 
 function drawSnake() {
     let snakeHeadPosition = "x" + position.x + "y" + position.y;
-    document.getElementById(snakeHeadPosition).style.background = "red";
+    document.getElementById(snakeHeadPosition).className += " body";
 }
-
-drawBoard();
 
 //gameLoop
 
@@ -76,23 +73,32 @@ function gameLoop()
     drawSnake();
 }
 
+
+//start Game from here......
+
+drawBoard();
 setInterval(gameLoop, 500);
+
+//
+// window.requestAnimationFrame
+//
 
 // keyboard controls
 
 window.addEventListener("keydown", function (event) {
 
     if (event.key == "ArrowUp") {
-        direction = "up";
+        direction = 1;
     }
     if (event.key == "ArrowDown") {
-        direction = "down";
+        direction = 2;
     }
     if (event.key == "ArrowRight") {
-        direction = "right";
+        direction = 3;
     }
     if (event.key == "ArrowLeft") {
-        direction = "left";
+        direction = 4;
     }
+    // voeg WASD toe (voor de echte gamers onder ons....)
     keyboardInput.innerHTML = direction;
 }, true);
