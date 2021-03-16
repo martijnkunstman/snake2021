@@ -102,6 +102,7 @@ textarea {
   font-size: 8px;
 }
 
+/*
 #x11y11{
   background: green;
 }
@@ -109,8 +110,22 @@ textarea {
   background: yellow;
 }
 
-.body{
+#x12y0{
+  background: blue;
+}
+
+#x12y12{
+  background: black;
+}
+*/
+
+.bodySnake{
   background-color:  red;
+  border-radius: 50%;
+}
+
+.food{
+  background-color:  blue;
   border-radius: 50%;
 }
 
