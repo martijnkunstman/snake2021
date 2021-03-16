@@ -7,9 +7,11 @@ let foodIsEaten = true;
 let snakePosition = { x: Math.floor(boardSize / 2), y: Math.floor(boardSize / 2) };
 let foodPosition = { x: 0, y: 0 };
 
-//drawBoard (maakt het speelveld dat is opgebouwd uit div elementen met een unieke id)
+let snakePositions = [];
+snakePositions.push("x"+snakePosition.x+"y"+snakePosition.y);
 
 function drawBoard() {
+    //drawBoard (maakt het speelveld dat is opgebouwd uit div elementen met een unieke id)
     for (let y = 0; y < boardSize; y++) {
         for (let x = 0; x < boardSize; x++) {
             board.innerHTML += "<div id='x" + x + "y" + y + "' class='cell'>x" + x + "y" + y + "</div>";
@@ -18,9 +20,8 @@ function drawBoard() {
     }
 }
 
-//clearBoard
-
 function clearBoard() {
+    //clearBoard (maak het bord leeg door de class van alle blokjes terug te zetten naar cell)
     /*
     for (let j = 0; j < boardSize; j++) {
         for (let i = 0; i < boardSize; i++) {
@@ -30,14 +31,10 @@ function clearBoard() {
     }
     */
 
-    // bovenstaande kan met minder code door dit te doen....  
-
-
+    // bovenstaande kan met minder code door dit te doen....
     document.querySelectorAll('.cell').forEach(function (cell) {
         cell.className = "cell";
     });
-
-
 
 }
 
@@ -61,6 +58,9 @@ function updatesnakePosition() {
         snakePosition.x = snakePosition.x - 1;
     }
 
+    snakePositions.shift();
+    snakePositions.push("x"+snakePosition.x+"y"+snakePosition.y);
+
 }
 
 //resetGame
@@ -80,14 +80,22 @@ function collisionCheck() {
 //drawSnake
 
 function drawSnake() {
-    let snakeHeadsnakePosition = "x" + snakePosition.x + "y" + snakePosition.y;
-    document.getElementById(snakeHeadsnakePosition).className += " bodySnake";
+    //let snakeHeadsnakePosition = "x" + snakePosition.x + "y" + snakePosition.y;
+    //document.getElementById(snakeHeadsnakePosition).className += " bodySnake";
+    for(let i=0;i<snakePositions.length;i++)
+    {
+        //console.log(snakePositions[i]);
+        document.getElementById(snakePositions[i]).className += " bodySnake";
+    }
+
 }
+
+//drawFood
 
 function drawFood() {
     if (foodIsEaten) {
         //
-        //todo: zorg er voor dat het voedsel nooit op de slang kan komen te staan!!
+        //TODO: zorg er voor dat het voedsel nooit op de slang kan komen te staan!!
         //
         let xRandom = Math.floor(Math.random() * (boardSize - 1));
         let yRandom = Math.floor(Math.random() * (boardSize - 1));
@@ -99,6 +107,19 @@ function drawFood() {
     document.getElementById(foodPositionID).className += " food";
 }
 
+function snakeEatsFood()
+{  
+    if (snakePosition.x == foodPosition.x && snakePosition.y == foodPosition.y)
+    {
+        //console.log("Yummy!!!!!!");
+        foodIsEaten = true;       
+        snakePositions.push("x"+snakePosition.x+"y"+snakePosition.y);
+        //console.log(snakePositions);
+    }
+}
+
+
+
 //gameLoop
 
 function gameLoop() {
@@ -108,16 +129,19 @@ function gameLoop() {
     clearBoard();
     drawFood();
     drawSnake();
+    snakeEatsFood();
 
 }
 
 //start Game here......
 
 drawBoard();
+//gameLoop();
+
 setInterval(gameLoop, 500);
 
 //
-// todo: werk met window.requestAnimationFrame i.p.v. setInterval
+// TODO: werk met window.requestAnimationFrame i.p.v. setInterval
 //
 
 // keyboard controls
@@ -141,6 +165,6 @@ window.addEventListener("keydown", function (event) {
         direction = 4;
     }
 
-    // todo: voeg WASD toe (voor de echte gamers onder ons....)
+    // TODO: voeg WASD toe (voor de echte gamers onder ons....)
     keyboardInput.innerHTML = "direction:" + direction;
 }, true);
