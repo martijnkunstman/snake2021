@@ -90,7 +90,7 @@ function drawFood() {
         //todo: zorg er voor dat het voedsel nooit op de slang kan komen te staan!!
         //
         let xRandom = Math.floor(Math.random() * (boardSize - 1));
-        let yRandom = Math.floor(Math.random() * (boardSize f- 1));
+        let yRandom = Math.floor(Math.random() * (boardSize - 1));
         foodPosition.x = xRandom;
         foodPosition.y = yRandom;
         foodIsEaten = false;
