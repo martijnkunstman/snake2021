@@ -1,12 +1,11 @@
-//TODO: slang kan botsen tegen zichzelf
+//DONE: slang kan botsen tegen zichzelf
 //DONE: bug eruit halen als slang tegen de muur aan komt...
 //DONE: slang mag niet tegen zichzelf in bewegen
 //TODO: css styling verbeteren (positie midden op het scherm)
 //DONE: slang hoofd en staart einde
 //TODO: slang staart einde
 //TODO: game is responsive
-
-//DONE: snake steeds sneller op basis van lengte
+//DONE: snake steeds sneller op basis van lengte (en tijd!)
 
 //TODO: game online zetten
 
@@ -99,7 +98,7 @@ function collisionCheck() {
     {
         if (snakePositionControle==snakePositions[i])
         {
-            console.log("botsing tegen eigen lijf!!!!");
+            //console.log("botsing tegen eigen lijf!!!!");
             resetGame();
         }
     }
@@ -115,12 +114,15 @@ function drawSnake() {
     for (let i = 0; i < snakePositions.length; i++) {
         if (i == 0) {
             //TODO: staart wordt getekend
-            //document.getElementById(snakePositions[i]).className += " bodyHead";
+           
+            //document.getElementById(snakePositions[i]).className += " bodyTail";
+            //document.getElementById(snakePositions[i]).className += " bodyHeadDirection" + direction;
+      
         }
         if (i == snakePositions.length - 1) {
-            //TODO: hoofd wordt getekend
+            //DONE: hoofd wordt getekend
             document.getElementById(snakePositions[i]).className += " bodyHead";
-            document.getElementById(snakePositions[i]).className += " bodyDirection" + direction;
+            document.getElementById(snakePositions[i]).className += " bodyHeadDirection" + direction;
         }
         //console.log(snakePositions[i]);
         document.getElementById(snakePositions[i]).className += " bodySnake";
