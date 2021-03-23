@@ -124,6 +124,27 @@ textarea {
   border-radius: 50%;
 }
 
+.bodyHead{
+  background-color:  rgba(0,0,0,0);
+  border-radius: 50%;
+  border: none;
+  background-image: url(../img/snake_head.png);
+  background-size: contain;
+}
+
+.bodyDirection1{
+  transform: rotate(180deg);
+}
+.bodyDirection2{
+  transform: rotate(0deg);
+}
+.bodyDirection3{
+  transform: rotate(270deg);
+}
+.bodyDirection4{
+  transform: rotate(-270deg);
+}
+
 .food{
   background-color:  blue;
   border-radius: 50%;

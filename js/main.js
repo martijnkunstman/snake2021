@@ -1,12 +1,14 @@
-//TODO: game online zetten
 //TODO: slang kan botsen tegen zichzelf
-//TODO: bug eruit halen als slang tegen de muur aan komt...
-//TODO: slang mag niet tegen zichzelf in bewegen
+//DONE: bug eruit halen als slang tegen de muur aan komt...
+//DONE: slang mag niet tegen zichzelf in bewegen
 //TODO: css styling verbeteren (positie midden op het scherm)
-//TODO: slang hoofd en staart einde
+//DONE: slang hoofd en staart einde
+//TODO: slang staart einde
 //TODO: game is responsive
 
 //DONE: snake steeds sneller op basis van lengte
+
+//TODO: game online zetten
 
 let boardSize = 13;
 let board = document.getElementById("board");
@@ -79,12 +81,30 @@ function resetGame() {
     //direction = [0,0]; //alternatief
     direction = 0;
     snakePosition = { x: Math.floor((boardSize - 1) / 2), y: Math.floor((boardSize - 1) / 2) };
+    snakePositions = [];
+    snakePositions.push("x" + snakePosition.x + "y" + snakePosition.y);
 }
 
 //collisionBoarderCheck
 
 function collisionCheck() {
+    //checkt of de slang buiten het speelveld komt
     if (snakePosition.x < 0 || snakePosition.y < 0 || snakePosition.x > boardSize - 1 || snakePosition.y > boardSize - 1) { resetGame() }
+
+    //checken of slag zichzelf raakt = als positie van het hoofd hetzelfde is als een van de posities van het lijf
+
+    let snakePositionControle = "x"+snakePosition.x+"y"+snakePosition.y;
+    
+    for(let i=0;i<snakePositions.length-1;i++)
+    {
+        if (snakePositionControle==snakePositions[i])
+        {
+            console.log("botsing tegen eigen lijf!!!!");
+            resetGame();
+        }
+    }
+
+
 }
 
 //drawSnake
@@ -94,10 +114,13 @@ function drawSnake() {
     //document.getElementById(snakeHeadsnakePosition).className += " bodySnake";
     for (let i = 0; i < snakePositions.length; i++) {
         if (i == 0) {
-            //TODO: hoofd wordt getekend
+            //TODO: staart wordt getekend
+            //document.getElementById(snakePositions[i]).className += " bodyHead";
         }
         if (i == snakePositions.length - 1) {
-            //TODO: staart wordt getekend
+            //TODO: hoofd wordt getekend
+            document.getElementById(snakePositions[i]).className += " bodyHead";
+            document.getElementById(snakePositions[i]).className += " bodyDirection" + direction;
         }
         //console.log(snakePositions[i]);
         document.getElementById(snakePositions[i]).className += " bodySnake";
@@ -151,7 +174,7 @@ function gameLoop() {
     if (timeoutTime < 100) {
         timeoutTime = 100;
     }
-    console.log(timeoutTime);
+    //console.log(timeoutTime);
     setTimeout(gameLoop, timeoutTime);
 }
 
@@ -174,19 +197,28 @@ window.addEventListener("keydown", function (event) {
 
     if (event.key == "ArrowUp") {
         //direction = [0,-1]; //alternatief
-        direction = 1;
+        if (direction != 2) {
+            direction = 1;
+        }
     }
     if (event.key == "ArrowDown") {
         //direction = [0,1]; //alternatief
-        direction = 2;
+        if (direction != 1) {
+            direction = 2;
+        }
     }
     if (event.key == "ArrowRight") {
         //direction = [1,0]; //alternatief
-        direction = 3;
+        if (direction != 4) {
+            direction = 3;
+        }
     }
     if (event.key == "ArrowLeft") {
         //direction = [-1,0]; //alternatief
-        direction = 4;
+        if (direction != 3) {
+            direction = 4;
+        }
+
     }
 
     // TODO: voeg WASD toe (voor de echte gamers onder ons....)
