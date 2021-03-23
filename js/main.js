@@ -1,3 +1,13 @@
+//TODO: game online zetten
+//TODO: slang kan botsen tegen zichzelf
+//TODO: bug eruit halen als slang tegen de muur aan komt...
+//TODO: slang mag niet tegen zichzelf in bewegen
+//TODO: css styling verbeteren (positie midden op het scherm)
+//TODO: slang hoofd en staart einde
+//TODO: game is responsive
+
+//DONE: snake steeds sneller op basis van lengte
+
 let boardSize = 13;
 let board = document.getElementById("board");
 let keyboardInput = document.getElementById("keyboardInput");
@@ -8,7 +18,7 @@ let snakePosition = { x: Math.floor(boardSize / 2), y: Math.floor(boardSize / 2)
 let foodPosition = { x: 0, y: 0 };
 
 let snakePositions = [];
-snakePositions.push("x"+snakePosition.x+"y"+snakePosition.y);
+snakePositions.push("x" + snakePosition.x + "y" + snakePosition.y);
 
 function drawBoard() {
     //drawBoard (maakt het speelveld dat is opgebouwd uit div elementen met een unieke id)
@@ -59,7 +69,7 @@ function updatesnakePosition() {
     }
 
     snakePositions.shift();
-    snakePositions.push("x"+snakePosition.x+"y"+snakePosition.y);
+    snakePositions.push("x" + snakePosition.x + "y" + snakePosition.y);
 
 }
 
@@ -82,11 +92,18 @@ function collisionCheck() {
 function drawSnake() {
     //let snakeHeadsnakePosition = "x" + snakePosition.x + "y" + snakePosition.y;
     //document.getElementById(snakeHeadsnakePosition).className += " bodySnake";
-    for(let i=0;i<snakePositions.length;i++)
-    {
+    for (let i = 0; i < snakePositions.length; i++) {
+        if (i == 0) {
+            //TODO: hoofd wordt getekend
+        }
+        if (i == snakePositions.length - 1) {
+            //TODO: staart wordt getekend
+        }
         //console.log(snakePositions[i]);
         document.getElementById(snakePositions[i]).className += " bodySnake";
     }
+
+    document.getElementById("keyboardInput").innerHTML = snakePositions.length;
 
 }
 
@@ -107,13 +124,11 @@ function drawFood() {
     document.getElementById(foodPositionID).className += " food";
 }
 
-function snakeEatsFood()
-{  
-    if (snakePosition.x == foodPosition.x && snakePosition.y == foodPosition.y)
-    {
+function snakeEatsFood() {
+    if (snakePosition.x == foodPosition.x && snakePosition.y == foodPosition.y) {
         //console.log("Yummy!!!!!!");
-        foodIsEaten = true;       
-        snakePositions.push("x"+snakePosition.x+"y"+snakePosition.y);
+        foodIsEaten = true;
+        snakePositions.push("x" + snakePosition.x + "y" + snakePosition.y);
         //console.log(snakePositions);
     }
 }
@@ -121,7 +136,7 @@ function snakeEatsFood()
 
 
 //gameLoop
-
+let timeCounter = 0;
 function gameLoop() {
 
     updatesnakePosition();
@@ -131,18 +146,27 @@ function gameLoop() {
     drawSnake();
     snakeEatsFood();
 
+    timeCounter++;
+    var timeoutTime = 550 - snakePositions.length * 30 - timeCounter / 2;
+    if (timeoutTime < 100) {
+        timeoutTime = 100;
+    }
+    console.log(timeoutTime);
+    setTimeout(gameLoop, timeoutTime);
 }
 
 //start Game here......
 
 drawBoard();
-//gameLoop();
 
-setInterval(gameLoop, 500);
+// setInterVal werkt niet als je de slang sneller wilt laten gaan...
+//setInterval(gameLoop, 550-snakePositions.length*100);//500 450 400 350 300
 
 //
 // TODO: werk met window.requestAnimationFrame i.p.v. setInterval
 //
+
+setTimeout(gameLoop, 0);
 
 // keyboard controls
 
